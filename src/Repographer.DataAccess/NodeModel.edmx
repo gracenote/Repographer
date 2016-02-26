@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RepographerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Node">
+          <Key>
+            <PropertyRef Name="NodeID" />
+          </Key>
+          <Property Name="NodeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NodeTypeID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="Path" Type="nvarchar" MaxLength="4000" />
+        </EntityType>
+        <EntityType Name="NodeType">
+          <Key>
+            <PropertyRef Name="NodeTypeID" />
+          </Key>
+          <Property Name="NodeTypeID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Relation">
+          <Key>
+            <PropertyRef Name="RelationID" />
+          </Key>
+          <Property Name="RelationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RelationTypeID" Type="int" Nullable="false" />
+          <Property Name="FromNodeID" Type="int" Nullable="false" />
+          <Property Name="ToNodeID" Type="int" Nullable="false" />
+          <Property Name="Weight" Type="float" />
+        </EntityType>
+        <EntityType Name="RelationType">
+          <Key>
+            <PropertyRef Name="RelationTypeID" />
+          </Key>
+          <Property Name="RelationTypeID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Node_NodeType">
+          <End Role="NodeType" Type="Self.NodeType" Multiplicity="1" />
+          <End Role="Node" Type="Self.Node" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NodeType">
+              <PropertyRef Name="NodeTypeID" />
+            </Principal>
+            <Dependent Role="Node">
+              <PropertyRef Name="NodeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Relation_Node">
+          <End Role="Node" Type="Self.Node" Multiplicity="1" />
+          <End Role="Relation" Type="Self.Relation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Node">
+              <PropertyRef Name="NodeID" />
+            </Principal>
+            <Dependent Role="Relation">
+              <PropertyRef Name="FromNodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Relation_Node1">
+          <End Role="Node" Type="Self.Node" Multiplicity="1" />
+          <End Role="Relation" Type="Self.Relation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Node">
+              <PropertyRef Name="NodeID" />
+            </Principal>
+            <Dependent Role="Relation">
+              <PropertyRef Name="ToNodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Relation_RelationType">
+          <End Role="RelationType" Type="Self.RelationType" Multiplicity="1" />
+          <End Role="Relation" Type="Self.Relation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RelationType">
+              <PropertyRef Name="RelationTypeID" />
+            </Principal>
+            <Dependent Role="Relation">
+              <PropertyRef Name="RelationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RepographerModelStoreContainer">
+          <EntitySet Name="Node" EntityType="Self.Node" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NodeType" EntityType="Self.NodeType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Relation" EntityType="Self.Relation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RelationType" EntityType="Self.RelationType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Node_NodeType" Association="Self.FK_Node_NodeType">
+            <End Role="NodeType" EntitySet="NodeType" />
+            <End Role="Node" EntitySet="Node" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Relation_Node" Association="Self.FK_Relation_Node">
+            <End Role="Node" EntitySet="Node" />
+            <End Role="Relation" EntitySet="Relation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Relation_Node1" Association="Self.FK_Relation_Node1">
+            <End Role="Node" EntitySet="Node" />
+            <End Role="Relation" EntitySet="Relation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Relation_RelationType" Association="Self.FK_Relation_RelationType">
+            <End Role="RelationType" EntitySet="RelationType" />
+            <End Role="Relation" EntitySet="Relation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RepographerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Node">
+          <Key>
+            <PropertyRef Name="NodeID" />
+          </Key>
+          <Property Name="NodeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NodeTypeID" Type="RepographerModel.NodeTypes" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Path" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NodeType" Relationship="Self.FK_Node_NodeType" FromRole="Node" ToRole="NodeType" />
+          <NavigationProperty Name="Out" Relationship="Self.FK_Relation_Node" FromRole="Node" ToRole="Relation" />
+          <NavigationProperty Name="In" Relationship="Self.FK_Relation_Node1" FromRole="Node" ToRole="Relation" />
+        </EntityType>
+        <EntityType Name="NodeType">
+          <Key>
+            <PropertyRef Name="NodeTypeID" />
+          </Key>
+          <Property Name="NodeTypeID" Type="RepographerModel.NodeTypes" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Nodes" Relationship="Self.FK_Node_NodeType" FromRole="NodeType" ToRole="Node" />
+        </EntityType>
+        <EntityType Name="Relation">
+          <Key>
+            <PropertyRef Name="RelationID" />
+          </Key>
+          <Property Name="RelationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RelationTypeID" Type="RepographerModel.RelationTypes" Nullable="false" />
+          <Property Name="FromNodeID" Type="Int32" Nullable="false" />
+          <Property Name="ToNodeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="From" Relationship="Self.FK_Relation_Node" FromRole="Relation" ToRole="Node" />
+          <NavigationProperty Name="To" Relationship="Self.FK_Relation_Node1" FromRole="Relation" ToRole="Node" />
+          <NavigationProperty Name="RelationType" Relationship="Self.FK_Relation_RelationType" FromRole="Relation" ToRole="RelationType" />
+          <Property Name="Weight" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RelationType">
+          <Key>
+            <PropertyRef Name="RelationTypeID" />
+          </Key>
+          <Property Name="RelationTypeID" Type="RepographerModel.RelationTypes" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Relations" Relationship="Self.FK_Relation_RelationType" FromRole="RelationType" ToRole="Relation" />
+        </EntityType>
+        <Association Name="FK_Node_NodeType">
+          <End Role="NodeType" Type="Self.NodeType" Multiplicity="1" />
+          <End Role="Node" Type="Self.Node" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NodeType">
+              <PropertyRef Name="NodeTypeID" />
+            </Principal>
+            <Dependent Role="Node">
+              <PropertyRef Name="NodeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Relation_Node">
+          <End Role="Node" Type="Self.Node" Multiplicity="1" />
+          <End Role="Relation" Type="Self.Relation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Node">
+              <PropertyRef Name="NodeID" />
+            </Principal>
+            <Dependent Role="Relation">
+              <PropertyRef Name="FromNodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Relation_Node1">
+          <End Role="Node" Type="Self.Node" Multiplicity="1" />
+          <End Role="Relation" Type="Self.Relation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Node">
+              <PropertyRef Name="NodeID" />
+            </Principal>
+            <Dependent Role="Relation">
+              <PropertyRef Name="ToNodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Relation_RelationType">
+          <End Role="RelationType" Type="Self.RelationType" Multiplicity="1" />
+          <End Role="Relation" Type="Self.Relation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RelationType">
+              <PropertyRef Name="RelationTypeID" />
+            </Principal>
+            <Dependent Role="Relation">
+              <PropertyRef Name="RelationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RepographerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Nodes" EntityType="Self.Node" />
+          <EntitySet Name="NodeTypes" EntityType="Self.NodeType" />
+          <EntitySet Name="Relations" EntityType="Self.Relation" />
+          <EntitySet Name="RelationTypes" EntityType="Self.RelationType" />
+          <AssociationSet Name="FK_Node_NodeType" Association="Self.FK_Node_NodeType">
+            <End Role="NodeType" EntitySet="NodeTypes" />
+            <End Role="Node" EntitySet="Nodes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Relation_Node" Association="Self.FK_Relation_Node">
+            <End Role="Node" EntitySet="Nodes" />
+            <End Role="Relation" EntitySet="Relations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Relation_Node1" Association="Self.FK_Relation_Node1">
+            <End Role="Node" EntitySet="Nodes" />
+            <End Role="Relation" EntitySet="Relations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Relation_RelationType" Association="Self.FK_Relation_RelationType">
+            <End Role="RelationType" EntitySet="RelationTypes" />
+            <End Role="Relation" EntitySet="Relations" />
+          </AssociationSet>
+        </EntityContainer>
+        <EnumType Name="NodeTypes">
+          <Member Name="Solution" Value="1" />
+          <Member Name="Project" Value="2" />
+          <Member Name="Assembly" Value="3" />
+          <Member Name="GAC" Value="4" />
+          <Member Name="NugetPackage" Value="5" />
+        </EnumType>
+        <EnumType Name="RelationTypes">
+          <Member Name="Member" Value="1" />
+          <Member Name="Reference" Value="2" />
+        </EnumType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RepographerModelStoreContainer" CdmEntityContainer="RepographerEntities">
+          <EntitySetMapping Name="Nodes">
+            <EntityTypeMapping TypeName="RepographerModel.Node">
+              <MappingFragment StoreEntitySet="Node">
+                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
+                <ScalarProperty Name="NodeTypeID" ColumnName="NodeTypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NodeTypes">
+            <EntityTypeMapping TypeName="RepographerModel.NodeType">
+              <MappingFragment StoreEntitySet="NodeType">
+                <ScalarProperty Name="NodeTypeID" ColumnName="NodeTypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Relations">
+            <EntityTypeMapping TypeName="RepographerModel.Relation">
+              <MappingFragment StoreEntitySet="Relation">
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="RelationID" ColumnName="RelationID" />
+                <ScalarProperty Name="RelationTypeID" ColumnName="RelationTypeID" />
+                <ScalarProperty Name="FromNodeID" ColumnName="FromNodeID" />
+                <ScalarProperty Name="ToNodeID" ColumnName="ToNodeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RelationTypes">
+            <EntityTypeMapping TypeName="RepographerModel.RelationType">
+              <MappingFragment StoreEntitySet="RelationType">
+                <ScalarProperty Name="RelationTypeID" ColumnName="RelationTypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

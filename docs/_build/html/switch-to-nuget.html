@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Switching References to NuGet Packages &mdash; Repographer 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Repographer 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Miscellaneous" href="miscellaneous.html" />
+    <link rel="prev" title="Extracting Shared Libraries" href="extract-shared-libraries.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="switching-references-to-nuget-packages">
+<h1>Switching References to NuGet Packages<a class="headerlink" href="#switching-references-to-nuget-packages" title="Permalink to this headline">¶</a></h1>
+<p>Commands:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>repo.exe switch2nuget
+repo.exe removeproj
+</pre></div>
+</div>
+<p>The process of switching project and assembly references to NuGet Package references is actually quite trivial.  You simply run the <code class="docutils literal"><span class="pre">switch2nuget</span></code> command, supply the name of the reference to switch (as viewed in the &#8220;References&#8221; list for any given project), indicate the NuGet package version number, and provide the absolute path to where the .dll lives in the main &#8220;packages&#8221; folder.</p>
+<p>Ok, well, that last part is a <em>little</em> tricky.  One relatively simple way to figure that out is to run <code class="docutils literal"><span class="pre">nuget.exe</span> <span class="pre">Install-Package</span></code> on the command line to some temporary folder for the package you are switching to.  Take a look in the directory structure created by that package to find the .dll you care about.  Then just use that as the relative path from your central &#8220;packages&#8221; folder to supply as an absolute path to the <code class="docutils literal"><span class="pre">switch2nuget</span></code> command.</p>
+<p><code class="docutils literal"><span class="pre">switch2nuget</span></code> takes care of updating all of the reference HintPath entries, as well as making sure the packages.config file for each project is present and correct.</p>
+<p>Once the project references are all switched, you will want to remove the old shared project as a member from all .sln files in your ball of mud repository.  This is done using the <code class="docutils literal"><span class="pre">removeproj</span></code> command - see the documentation for usage.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="extract-shared-libraries.html" title="previous chapter">Extracting Shared Libraries</a></li>
+      <li>Next: <a href="miscellaneous.html" title="next chapter">Miscellaneous</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/switch-to-nuget.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Joe Bako.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/switch-to-nuget.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Extracting Shared Libraries &mdash; Repographer 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Repographer 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Switching Project and Assembly References to NuGet Packages" href="switch-to-nuget.html" />
+    <link rel="prev" title="Centralizing NuGet Packages" href="centralize-nuget.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="extracting-shared-libraries">
+<h1>Extracting Shared Libraries<a class="headerlink" href="#extracting-shared-libraries" title="Permalink to this headline">¶</a></h1>
+<p>The amount of time and effort it will take to extract shared libraries out of your repository and into NuGet Package repositories depends on just how big and complex your particular ball of mud is.  If you only have a few projects referenced by multiple solutions, and they are all nicely modularized as a &#8220;framework&#8221; of sorts, this effort can be completed in under an hour.  If you have several hundred projects cross-referenced by several hundred solutions, this process can take several months of effort.  Either way, the process itself can be broken down as:</p>
+<ol class="arabic">
+<li><p class="first">Identify the shared project(s) to extract using the Repographer Reports</p>
+</li>
+<li><p class="first">Determine if you wish to extract just the single project into its own repository, or cluster a few related projects that version together.</p>
+<blockquote>
+<div><ul class="simple">
+<li>For example, perhaps you have base Data Access project with a few child projects holding specific database implementations.  Any changes to the base Data Access classes will want to immediately be reflected in the derived children, so it may make sense to keep all of these projects together.  You can still deploy multiple NuGet Packages out of a single repository (one per each database implementation), as that is more a function of your build and package process than the actual place the projects live.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Move all of the projects you wish to extract into its own repository under one folder of the current repository.  Do not worry about breaking reference paths in doing so, as you will use Repographer to fix those for you.</p>
+</li>
+<li><p class="first">Extract that folder out into its own repository.  Different SCM systems (i.e. Mercurial, Git, SVN, TFS) have different ways to achieve this.  For example, in Git you would use the <code class="docutils literal"><span class="pre">git</span> <span class="pre">subtree</span></code> command.</p>
+</li>
+<li><p class="first">Create and publish the NuGet Packages from the new repository, either manually or via an automated build and deploy process.  See the NuGet documentation for instructions on creating packages.</p>
+</li>
+<li><p class="first">Use Repographer to switch existing project references to NuGet references in the ball of mud repository, and remove those projects as members of the various .sln files (see the next section).</p>
+</li>
+<li><p class="first">Remove the old extracted project code from the ball of mud repository.</p>
+</li>
+<li><p class="first">Commit!</p>
+</li>
+</ol>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="centralize-nuget.html" title="previous chapter">Centralizing NuGet Packages</a></li>
+      <li>Next: <a href="switch-to-nuget.html" title="next chapter">Switching Project and Assembly References to NuGet Packages</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/extract-shared-libraries.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Joe Bako.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/extract-shared-libraries.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

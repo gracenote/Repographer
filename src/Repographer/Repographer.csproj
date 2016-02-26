@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{240C7950-4DA4-44EE-92F7-EC9B7BAD2E01}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Repographer</RootNamespace>
+    <AssemblyName>repo</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Gexf4net">
+      <HintPath>..\lib\Gexf4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Build" />
+    <Reference Include="NuGet.Frameworks">
+      <HintPath>..\packages\NuGet.Packaging.1.0.0-pre-20150220044603\lib\net45\NuGet.Frameworks.dll</HintPath>
+    </Reference>
+    <Reference Include="NuGet.Packaging">
+      <HintPath>..\packages\NuGet.Packaging.1.0.0-pre-20150220044603\lib\net45\NuGet.Packaging.dll</HintPath>
+    </Reference>
+    <Reference Include="NuGet.PackagingCore">
+      <HintPath>..\packages\NuGet.Packaging.1.0.0-pre-20150220044603\lib\net45\NuGet.PackagingCore.dll</HintPath>
+    </Reference>
+    <Reference Include="NuGet.Resolver">
+      <HintPath>..\packages\NuGet.Packaging.1.0.0-pre-20150220044603\lib\net45\NuGet.Resolver.dll</HintPath>
+    </Reference>
+    <Reference Include="NuGet.Versioning">
+      <HintPath>..\packages\NuGet.Versioning.1.0.7\lib\portable-net40+win\NuGet.Versioning.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Modules\ChangeFramework\ChangeFrameworkAction.cs" />
+    <Compile Include="Modules\ChangeFramework\ChangeFrameworkModule.cs" />
+    <Compile Include="Modules\ChangeFramework\Factories\ChangeFrameworkActionFactory.cs" />
+    <Compile Include="Modules\ChangeFramework\Settings\Builders\ChangeFrameworkSettingsBuilder.cs" />
+    <Compile Include="Modules\ChangeFramework\Settings\ChangeFrameworkSettings.cs" />
+    <Compile Include="Modules\ChangeFramework\Settings\Validators\ChangeFrameworkSettingsValidator.cs" />
+    <Compile Include="Modules\ChangeNuget\ChangeNugetAction.cs" />
+    <Compile Include="Modules\ChangeNuget\ChangeNugetModule.cs" />
+    <Compile Include="Modules\ChangeNuget\Factories\ChangeNugetActionFactory.cs" />
+    <Compile Include="Modules\ChangeNuget\Settings\ChangeNugetSettings.cs" />
+    <Compile Include="Modules\ChangeNuget\Settings\Builders\ChangeNugetSettingsBuilder.cs" />
+    <Compile Include="Modules\Graph\GraphModule.cs" />
+    <Compile Include="Modules\PurgeFolder\Factories\PurgeFolderActionFactory.cs" />
+    <Compile Include="Modules\PurgeFolder\PurgeFolderAction.cs" />
+    <Compile Include="Modules\Main\ShowHelpAction.cs" />
+    <Compile Include="Modules\Main\Factories\ShowHelpActionFactory.cs" />
+    <Compile Include="Modules\Graph\GraphCompileAction.cs" />
+    <Compile Include="Modules\Graph\Factories\GraphCompileActionFactory.cs" />
+    <Compile Include="Modules\Graph\GraphExportAction.cs" />
+    <Compile Include="Modules\Graph\Factories\GraphExportActionFactory.cs" />
+    <Compile Include="Modules\Main\IRepoAction.cs" />
+    <Compile Include="Modules\Main\Factories\IRepoActionFactory.cs" />
+    <Compile Include="Modules\Main\Factories\Selectors\IRepoActionFactorySelector.cs" />
+    <Compile Include="Modules\Main\Factories\Selectors\RepoActionFactorySelector.cs" />
+    <Compile Include="Modules\PurgeFolder\PurgeFolderModule.cs" />
+    <Compile Include="Modules\ChangeNuget\Settings\Validators\ChangeNugetSettingsValidator.cs" />
+    <Compile Include="Modules\RemoveProject\Factories\RemoveProjectActionFactory.cs" />
+    <Compile Include="Modules\RemoveProject\RemoveProjectAction.cs" />
+    <Compile Include="Modules\RemoveProject\RemoveProjectModule.cs" />
+    <Compile Include="Modules\RemoveProject\Settings\Builders\RemoveProjectSettingsBuilder.cs" />
+    <Compile Include="Modules\RemoveProject\Settings\RemoveProjectSettings.cs" />
+    <Compile Include="Modules\RemoveProject\Settings\Validators\RemoveProjectSettingsValidator.cs" />
+    <Compile Include="Modules\RemoveReference\Factories\RemoveReferenceActionFactory.cs" />
+    <Compile Include="Modules\RemoveReference\Settings\Builders\RemoveReferenceSettingsBuilder.cs" />
+    <Compile Include="Modules\RemoveReference\Settings\RemoveReferenceSettings.cs" />
+    <Compile Include="Modules\RemoveReference\Settings\Validators\RemoveReferenceSettingsValidator.cs" />
+    <Compile Include="Modules\RemoveReference\RemoveReferenceAction.cs" />
+    <Compile Include="Modules\RemoveReference\RemoveReferenceModule.cs" />
+    <Compile Include="Modules\SwitchToNuget\SwitchToNugetAction.cs" />
+    <Compile Include="Modules\SwitchToNuget\Factories\SwitchToNugetActionFactory.cs" />
+    <Compile Include="Components\ITrueCounter.cs" />
+    <Compile Include="Components\SettingsExtensions.cs" />
+    <Compile Include="Components\TrueCounter.cs" />
+    <Compile Include="Modules\Main\MainModule.cs" />
+    <Compile Include="Components\IO\IDirectoryWalkerFactory.cs" />
+    <Compile Include="Modules\Graph\Settings\Builders\GraphCompileSettingsBuilder.cs" />
+    <Compile Include="Modules\Graph\Settings\Builders\GraphExportSettingsBuilder.cs" />
+    <Compile Include="Modules\SwitchToNuget\Settings\Builders\SwitchToNugetSettingsBuilder.cs" />
+    <Compile Include="Modules\Graph\Settings\GraphSettings.cs" />
+    <Compile Include="Modules\Graph\Settings\GraphCompileSettings.cs" />
+    <Compile Include="Modules\Graph\Settings\GraphExportSettings.cs" />
+    <Compile Include="Modules\Main\Settings\Builders\RepoActionSettingsBuilder.cs" />
+    <Compile Include="Modules\Main\Settings\Builders\ISettingsBuilder.cs" />
+    <Compile Include="Modules\Graph\Settings\Builders\GraphSettingsBuilder.cs" />
+    <Compile Include="Modules\PurgeFolder\Settings\Builders\PurgeFolderSettingsBuilder.cs" />
+    <Compile Include="Modules\Main\Settings\Builders\Selectors\IBuilderSelector.cs" />
+    <Compile Include="Modules\Main\Settings\Builders\Selectors\RepoActionSettingsBuilderSelector.cs" />
+    <Compile Include="Modules\Graph\Settings\Builders\GraphSettingsBuilderSelector.cs" />
+    <Compile Include="Modules\Main\Settings\IRepoActionSettings.cs" />
+    <Compile Include="Modules\Main\Settings\IRepoActionSettingsFactory.cs" />
+    <Compile Include="Modules\Main\Settings\RepoActionSettingsFactory.cs" />
+    <Compile Include="Modules\Main\Settings\ShowHelpSettings.cs" />
+    <Compile Include="Modules\Graph\Settings\Validators\GraphSettingsValidator.cs" />
+    <Compile Include="Modules\Graph\Settings\Validators\GraphCompileSettingsValidator.cs" />
+    <Compile Include="Modules\Graph\Settings\Validators\GraphExportSettingsValidator.cs" />
+    <Compile Include="Modules\Main\Settings\RepoActionSettings.cs" />
+    <Compile Include="Modules\PurgeFolder\Settings\PurgeFolderSettings.cs" />
+    <Compile Include="Modules\PurgeFolder\Settings\Validators\PurgeFolderSettingsValidator.cs" />
+    <Compile Include="Modules\Main\Settings\Validators\RepoActionSettingsValidator.cs" />
+    <Compile Include="Modules\SwitchToNuget\Settings\SwitchToNugetSettings.cs" />
+    <Compile Include="Components\ConsoleTraceWriter.cs" />
+    <Compile Include="Components\Constants.cs" />
+    <Compile Include="Components\ITraceWriter.cs" />
+    <Compile Include="Components\IO\Configuration\DirectoryRuleConfigurator.cs" />
+    <Compile Include="Components\IO\Configuration\DirectoryRuleConfiguratorImpl.cs" />
+    <Compile Include="Components\IO\Configuration\DirectoryWalkerConfigurator.cs" />
+    <Compile Include="Components\IO\Configuration\DirectoryWalkerConfiguratorImpl.cs" />
+    <Compile Include="Components\IO\Configuration\FileTypeRuleConfigurator.cs" />
+    <Compile Include="Components\IO\Configuration\FileTypeRuleConfiguratorImpl.cs" />
+    <Compile Include="Components\IO\DirectoryRule.cs" />
+    <Compile Include="Components\IO\DirectoryWalker.cs" />
+    <Compile Include="Components\IO\DirectoryWalkerFactory.cs" />
+    <Compile Include="Components\IO\FileTypeRule.cs" />
+    <Compile Include="Modules\SwitchToNuget\SwitchToNugetModule.cs" />
+    <Compile Include="Mono.Options\Options.cs" />
+    <Compile Include="Components\Parsing\AssemblyReference.cs" />
+    <Compile Include="Components\Parsing\Project.cs" />
+    <Compile Include="Components\Parsing\ProjectReference.cs" />
+    <Compile Include="Components\Parsing\Reference.cs" />
+    <Compile Include="Components\Parsing\Solution.cs" />
+    <Compile Include="Components\Parsing\SolutionReference.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Modules\SwitchToNuget\Settings\Validators\SwitchToNugetSettingsValidator.cs" />
+    <Compile Include="Components\Validation\AggregateValidationException.cs" />
+    <Compile Include="Components\Validation\IValidator.cs" />
+    <Compile Include="Components\Validation\ValidationCondition.cs" />
+    <Compile Include="Components\Validation\ValidationConditionLevel.cs" />
+    <Compile Include="Components\ValidationExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Repographer.DataAccess\Repographer.DataAccess.csproj">
+      <Project>{ae0466c2-6486-4511-8a16-68e08a9913e9}</Project>
+      <Name>Repographer.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

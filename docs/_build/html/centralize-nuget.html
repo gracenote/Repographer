@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Centralizing NuGet Packages &mdash; Repographer 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Repographer 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Extracting Shared Libraries" href="extract-shared-libraries.html" />
+    <link rel="prev" title="Referencing Solutions by Project" href="using-reports/ref-solutions-by-project.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="centralizing-nuget-packages">
+<h1>Centralizing NuGet Packages<a class="headerlink" href="#centralizing-nuget-packages" title="Permalink to this headline">¶</a></h1>
+<p>By default, NuGet creates a &#8220;packages&#8221; folder in the directory that houses the .sln file from where the NuGet Package reference is created.  This design makes the assumption that the .sln is housed in the top-most directory for the system, and that all child projects reside in directories beneath this top-level directory.  In this way, all external assembly dependencies referenced by projects within that Solution share the NuGet package binaries.</p>
+<p>In &#8220;big ball of mud&#8221; repositories, this is usually not the case.  Instead, you need to create a single top-level &#8220;packages&#8221; location at the root of the repository, and have all projects therein reference NuGet packages at this location.  This creates a predictable location by which all projects will find their external dependencies, allow projects referenced by multiple Solutions to use NuGet package references regardless of which .sln location was initially used to create the reference, and allow re-use of NuGet Packages across all projects with the reference rather than each project potentially downloading its own copy of the package.</p>
+<p>Luckily, NuGet now provides an option to change the default &#8220;packages&#8221; location behavior (as of v2.1).  You can find the documentation here:
+<a class="reference external" href="http://docs.nuget.org/release-notes/nuget-2.1">http://docs.nuget.org/release-notes/nuget-2.1</a></p>
+<p>In a nutshell, place a <code class="docutils literal"><span class="pre">nuget.config</span></code> file at the root of your repository, and set a &#8220;repositoryPath&#8221; value to point at a top-level &#8220;packages&#8221; folder that you create.</p>
+<div class="section" id="update-nuget-package-reference-location">
+<h2>Update NuGet Package Reference Location<a class="headerlink" href="#update-nuget-package-reference-location" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>Commands:</dt>
+<dd><code class="docutils literal"><span class="pre">repo.exe</span> <span class="pre">purgefolder</span></code>
+<code class="docutils literal"><span class="pre">repo.exe</span> <span class="pre">movenuget</span></code></dd>
+</dl>
+<p>Unfortunately, neither NuGet nor Visual Studio provide a way to update the HintPath for all NuGet Package references in projects to the new location.  Further, the release notes state</p>
+<blockquote>
+<div>Note that if you have an existing packages folder underneath your solution root, you will need to delete it before NuGet will place packages in the new location.</div></blockquote>
+<p>So there are two commands we need to use.  The first is to remove all of the current &#8220;packages&#8221; folders that might exist within your repository, and the second is to update all of the current NuGet Package reference HintPaths in the project files to the new packages folder.</p>
+<p>Run the &#8220;purge folder&#8221; command first, supplying &#8220;packages&#8221; as the folder (it will recursively look for all instances of the packages folder, regardless of nesting).  After, run the &#8220;move nuget&#8221; command and specify the absolute path to the new location (per the documentation for the command).  This will look for all current HintPaths that have &#8220;packages&#8221; in the text and update them accordingly.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Centralizing NuGet Packages</a><ul>
+<li><a class="reference internal" href="#update-nuget-package-reference-location">Update NuGet Package Reference Location</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="using-reports/ref-solutions-by-project.html" title="previous chapter">Referencing Solutions by Project</a></li>
+      <li>Next: <a href="extract-shared-libraries.html" title="next chapter">Extracting Shared Libraries</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/centralize-nuget.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Joe Bako.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/centralize-nuget.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

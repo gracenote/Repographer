@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6da8592798ba40099a91d0dad6a78fe3" Name="Diagram1">
+        <EntityTypeShape EntityType="RepographerModel.Node" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepographerModel.NodeType" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepographerModel.Relation" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepographerModel.RelationType" Width="1.5" PointX="7.5" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="RepographerModel.FK_Node_NodeType" ManuallyRouted="false" />
+        <AssociationConnector Association="RepographerModel.FK_Relation_Node" ManuallyRouted="false" />
+        <AssociationConnector Association="RepographerModel.FK_Relation_Node1" ManuallyRouted="false" />
+        <AssociationConnector Association="RepographerModel.FK_Relation_RelationType" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
