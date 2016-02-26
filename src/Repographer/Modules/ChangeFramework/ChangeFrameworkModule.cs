@@ -1,4 +1,11 @@
-﻿using Autofac;
+﻿#region License
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+// 
+//        http://www.apache.org/licenses/LICENSE-2.0
+#endregion
+using Autofac;
 using Repographer.Components.Validation;
 using Repographer.Modules.ChangeFramework.Factories;
 using Repographer.Modules.ChangeFramework.Settings;
