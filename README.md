@@ -17,7 +17,7 @@ Repographer is a command-line tool to assist in breaking up large Microsoft .NET
 
 ## Documentation
 
-Documentation is hosted over at Read The Docs.
+Documentation is hosted over at [Read The Docs](http://repographer.readthedocs.io/en/latest/).
 
 ## License
 
